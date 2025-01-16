@@ -1,0 +1,47 @@
+name: Sync Choreo docs and update Chroma Db
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update_chrom_db:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout project repository
+        uses: actions/checkout@v3
+        with:
+          repository:
+
+      - name: Clone docs_choreo repository
+        run: |
+          git clone https://github.com/wso2/docs-choreo-dev.git en
+
+      - name: Copy New Markdown Files
+        run: |
+          mkdir -p data
+          rsync -a --ignore-existing en/docs/
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run fill_db.py
+        run: python fill_db.py
+
+      - name: Commit and Push Updates
+        if: success()
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Updated ChromaDB with new docs"
+          git push origin main
