@@ -43,7 +43,7 @@ jobs:
       - name: Commit and Push Updates
         if: success()
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
