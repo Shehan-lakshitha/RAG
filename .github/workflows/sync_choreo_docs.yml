@@ -1,9 +1,9 @@
 name: Sync Choreo docs and update Chroma Db
 
 on:
-  repository_dispatch:
-    types:
-      - sync-choreo-docs
+  push:
+    branches:
+      - main
 
 permissions:
   contents: write
