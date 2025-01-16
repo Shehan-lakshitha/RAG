@@ -22,7 +22,7 @@ jobs:
       - name: Copy New Markdown Files
         run: |
           mkdir -p data
-          rsync -a --ignore-existing en/docs/
+          rsync -a --ignore-existing en
 
       - name: Set up Python
         uses: actions/setup-python@v4
